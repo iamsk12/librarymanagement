@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import redirect, render,HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
@@ -69,7 +70,8 @@ def edit_book(request,id):
 #for admin login page
 def admin_login(request):
     if request.method == "POST":
-        username = request.POST['username']
+        userinfo = User.objects.get(email=request.POST['email'])
+        username = userinfo.username
         password = request.POST['password']
         user = authenticate(username=username, password=password)
 
@@ -87,13 +89,25 @@ def admin_login(request):
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('admin_login')
+        try: 
+            if not User.objects.get(email=request.POST['email']):
+                return HttpResponse('This email id already registered')
+            if form.is_valid():
+                form.save()
+                username = form.cleaned_data.get('username')
+                raw_password = form.cleaned_data.get('password1')
+                user = authenticate(username=username, password=raw_password)
+                login(request, user)
+                return redirect('admin_login')
+        except:
+            if form.is_valid():
+                form.save()
+                username = form.cleaned_data.get('username')
+                raw_password = form.cleaned_data.get('password1')
+                user = authenticate(username=username, password=raw_password)
+                login(request, user)
+                return redirect('admin_login')
+            
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
