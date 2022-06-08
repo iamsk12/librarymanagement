@@ -2,6 +2,8 @@
 
 clone the repository
 
+======================================================================================================================
+
 steps to run project
 
 1.python manage.py makemigration
@@ -10,8 +12,10 @@ steps to run project
 
 3.python manage.py runserver
 
+======================================================================================================================
 
 Urls
+
 add_book - Add book to library system after logged in to admin user
 
 edit_book - Edit book frpm library system after logged in to admin user
