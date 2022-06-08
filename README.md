@@ -5,7 +5,9 @@ clone the repository
 steps to run project
 
 1.python manage.py makemigration
+
 2.python manage.py migrate
+
 3.python manage.py runserver
 
 
