@@ -53,7 +53,6 @@ def delete_book(request, id):
 
 #edit book added by admin
 def edit_book(request,id):
-    book = Book.objects.get(id=id)
     if(request.method=="POST"):
         Book.objects.filter(id=id).update(
             name = request.POST['name'],
@@ -61,8 +60,9 @@ def edit_book(request,id):
             isbn = request.POST['isbn'],
             category = request.POST['category'],
         )
-        book.save()
         return HttpResponseRedirect('/view_books')
+    else: 
+        book = Book.objects.get(id=id)
     
     return render(request,'edit_book.html',{'form':book})
 
