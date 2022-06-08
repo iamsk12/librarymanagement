@@ -1,0 +1,30 @@
+{% extends 'landingpage.html' %}
+
+{% block content %}
+<div class="navbar">
+    <div id="title">
+      <span>
+        Add new book
+      </span>
+    </div>
+  </div>
+<div class="container">
+    <form method="POST"> {% csrf_token %}
+    
+            <label><i style="font-weight: bold;">Book Name</i></label>
+            <input type="text" class="form-control mt-2" name="name" placeholder="Enter name of the Book" required>
+
+            <label><i style="font-weight: bold;">Author Name</i></label>
+            <input type="text" class="form-control mt-2" name="author" placeholder="Enter name of the Author" required>
+
+            <label><i style="font-weight: bold;">ISBN Number</i></label>
+            <input type="number" class="form-control mt-2" name="isbn" placeholder="Enter ISBN number of the book" required>
+
+            <label><i style="font-weight: bold;">Category</i></label>
+            <input type="text" class="form-control mt-2" name="category" placeholder="Enter Category of the book" required>
+ 
+    <button type="submit" class="btn btn-outline-primary mt-4">Add Book</button>
+</div>
+{{form.errors}}
+</form>
+{% endblock %}

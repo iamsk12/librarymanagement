@@ -1,0 +1,45 @@
+{% extends 'landingpage.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <form method="post" > {% csrf_token %}
+        <div class="navbar">
+            <div id="title">
+              <span>
+                Book list
+              </span>
+            </div>
+          </div>
+            <table class="table table-hover" id="example">
+        <thead>
+            <tr>
+                {% comment %} <th>Sr.No</th> {% endcomment %}
+                <th>Sr.No</th>
+                <th>Name</th>
+                <th>Author</th>
+                <th>ISBN Number</th>
+                <th>Category</th>
+                {% comment %} <th>Delete</th> {% endcomment %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{forloop.counter}}.</td>
+                <td>{{book.name}}</td>
+                <td>{{book.author}}</td>
+                <td>{{book.isbn}}</td>
+                <td>{{book.category}}</td>
+                {% if request.user.is_authenticated %}
+                <td><a href="/edit_book/{{book.id}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to edit this book?')">Edit</a></td>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                <td><a href="/delete_book/{{book.id}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book?')">Delete</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
+</div>
+{% endblock %}
